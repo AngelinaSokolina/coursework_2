@@ -2,10 +2,11 @@ import json
 import os
 from typing import Any
 
+from src.abc_storage import ABCStorage
 from src.aeroplane import Aeroplane
 
 
-class JSONStorage:
+class JSONStorage(ABCStorage):
     """Класс для сохранения информации о самолетах в JSON-файл."""
 
     def __init__(self, file_path: str = "data/aeroplanes.json") -> None:
@@ -33,7 +34,6 @@ class JSONStorage:
                 json.dump(data, f, ensure_ascii=False, indent=4)
         except TypeError as e:
             print(f"Ошибка при сохранении данных: {e}")
-            print("Проверьте, что все значения могут быть сериализованы в JSON")
 
     def add_aeroplane(self, aeroplane: Aeroplane) -> None:
         data = self._load_data()
@@ -73,6 +73,32 @@ class JSONStorage:
         data = self._load_data()
         data = [item for item in data if item.get("icao24") != aeroplane.icao24]
         self._save_data(data)
+
+    def delete_by_criteria(self, **criteria: Any) -> None:
+        """
+        Удаляет самолеты по указанным критериям.
+
+        Примеры:
+            storage.delete_by_criteria(origin_country="United States")
+            storage.delete_by_criteria(on_ground=True)
+        """
+        if not criteria:
+            return
+
+        data = self._load_data()
+
+        # Оставляем только те записи, которые НЕ подходят под критерии
+        filtered_data = []
+        for item in data:
+            match = False
+            for key, value in criteria.items():
+                if item.get(key) == value:
+                    match = True
+                    break
+            if not match:
+                filtered_data.append(item)
+
+        self._save_data(filtered_data)
 
     def clear(self) -> None:
         self._save_data([])
