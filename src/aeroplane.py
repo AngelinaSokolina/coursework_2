@@ -55,7 +55,7 @@ class Aeroplane:
     @callsign.setter
     def callsign(self, value: str) -> None:
         if not value or not value.strip():
-            raise ValueError("Позывной не может быть пустым")
+            raise ValueError("Позывной/наименование не может быть пустым")
         self._callsign = value
 
     @property
