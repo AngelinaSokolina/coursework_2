@@ -1,0 +1,24 @@
+[
+    {
+        "icao24": "a80dbd",
+        "callsign": "N618PB",
+        "origin_country": "United States",
+        "current_country": "Россия",
+        "velocity": 254.43,
+        "baro_altitude": 14935.2,
+        "longitude": -80.6553,
+        "latitude": 42.616,
+        "on_ground": false
+    },
+    {
+        "icao24": "424765",
+        "callsign": "VPCGN",
+        "origin_country": "United Kingdom",
+        "current_country": "Россия",
+        "velocity": 251.64,
+        "baro_altitude": 14325.6,
+        "longitude": -108.4379,
+        "latitude": 52.1032,
+        "on_ground": false
+    }
+]

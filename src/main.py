@@ -36,14 +36,42 @@ def get_top_aeroplanes(aeroplanes: list[Aeroplane], top_n: int) -> list[Aeroplan
     return aeroplanes[:top_n]
 
 
-def print_aeroplanes(aeroplanes: list[Aeroplane]) -> None:
+def filter_by_origin_country(aeroplanes: list[Aeroplane], countries_str: str) -> list[Aeroplane]:
+    """
+    Фильтрует самолеты по стране регистрации.
+
+    Args:
+        aeroplanes: Список самолетов
+        countries_str: Строка со странами через запятую
+
+    Returns:
+        list[Aeroplane]: Отфильтрованный список
+    """
+    if not countries_str or not countries_str.strip():
+        return aeroplanes
+
+    # Разбиваем строку на список стран
+    countries = [c.strip().lower() for c in countries_str.split(',') if c.strip()]
+
+    if not countries:
+        return aeroplanes
+
+    filtered = []
+    for plane in aeroplanes:
+        if plane.origin_country.lower() in countries:
+            filtered.append(plane)
+
+    return filtered
+
+
+def print_aeroplanes(aeroplanes: list[Aeroplane], title: str = "Топ самолетов") -> None:
     """Выводит информацию о самолетах в консоль."""
     if not aeroplanes:
         print("Самолетов не найдено")
         return
 
     print(f"\n{'=' * 70}")
-    print(f"Топ {len(aeroplanes)} самолетов по высоте")
+    print(f"{title} ({len(aeroplanes)} шт.)")
     print('=' * 70)
 
     for i, plane in enumerate(aeroplanes, 1):
@@ -149,7 +177,7 @@ def delete_menu(storage: JSONStorage) -> None:
             if not all_planes:
                 print("Файл пуст")
             else:
-                print_aeroplanes(all_planes)
+                print_aeroplanes(all_planes, "Все сохраненные самолеты")
 
         elif choice == "5":
             confirm = input("Вы уверены, что хотите очистить весь файл? (да/нет): ").strip().lower()
@@ -226,7 +254,7 @@ def user_interaction() -> None:
         aeroplanes = Aeroplane.cast_to_object_list(data, country)
         print(f"Найдено самолетов: {len(aeroplanes)}")
 
-        # ===== Ввод количества =====
+        # ===== Ввод количества для топа =====
         while True:
             try:
                 top_n = input(f"\nВведите количество самолетов для вывода в топ N по высоте (до {MAX_TOP}): ").strip()
@@ -246,6 +274,7 @@ def user_interaction() -> None:
             except ValueError:
                 print("Ошибка: введите целое положительное число. Попробуйте снова.")
 
+        # ===== СОРТИРОВКА И ТОП =====
         sorted_aeroplanes = sort_aeroplanes(aeroplanes)
         top_aeroplanes = get_top_aeroplanes(sorted_aeroplanes, top_n)
 
@@ -255,7 +284,18 @@ def user_interaction() -> None:
 
         print(f"\nСохранено {len(top_aeroplanes)} самолетов в файл data/aeroplanes.json")
 
-        print_aeroplanes(top_aeroplanes)
+        print_aeroplanes(top_aeroplanes, f"Топ {len(top_aeroplanes)} самолетов по высоте")
+
+        # ===== ДОПОЛНИТЕЛЬНАЯ ФИЛЬТРАЦИЯ =====
+        # Фильтрация по стране регистрации (как требуется в задании)
+        filter_country = input("\nХотите отфильтровать самолеты по стране регистрации? (да/нет): ").strip().lower()
+        if filter_country in ("да", "yes", "y"):
+            countries_str = input("Введите страны через запятую (например, United States, France): ").strip()
+            filtered_planes = filter_by_origin_country(aeroplanes, countries_str)
+            if filtered_planes:
+                print_aeroplanes(filtered_planes, "Отфильтрованные по стране регистрации")
+            else:
+                print("Самолеты с указанными странами регистрации не найдены.")
 
         # ===== Меню удаления =====
         delete_menu(json_saver)
