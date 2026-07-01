@@ -1,0 +1,156 @@
+[
+    {
+        "icao24": "4520d3",
+        "callsign": "EGT256",
+        "origin_country": "Bulgaria",
+        "current_country": "Италия",
+        "velocity": 229.09,
+        "baro_altitude": 13106.4,
+        "longitude": 8.081,
+        "latitude": 42.8273,
+        "on_ground": false
+    },
+    {
+        "icao24": "4d2155",
+        "callsign": "VJT993",
+        "origin_country": "Malta",
+        "current_country": "Италия",
+        "velocity": 244.56,
+        "baro_altitude": 13106.4,
+        "longitude": 8.4948,
+        "latitude": 45.6606,
+        "on_ground": false
+    },
+    {
+        "icao24": "48af08",
+        "callsign": "LOT6394",
+        "origin_country": "Poland",
+        "current_country": "Италия",
+        "velocity": 237.49,
+        "baro_altitude": 12496.8,
+        "longitude": 16.1859,
+        "latitude": 46.0405,
+        "on_ground": false
+    },
+    {
+        "icao24": "4ba9ce",
+        "callsign": "THY8DP",
+        "origin_country": "Turkey",
+        "current_country": "Италия",
+        "velocity": 238.01,
+        "baro_altitude": 12496.8,
+        "longitude": 17.2401,
+        "latitude": 46.707,
+        "on_ground": false
+    },
+    {
+        "icao24": "4ba9cd",
+        "callsign": "THY9DC",
+        "origin_country": "Turkey",
+        "current_country": "Италия",
+        "velocity": 251.6,
+        "baro_altitude": 12496.8,
+        "longitude": 15.7143,
+        "latitude": 40.6015,
+        "on_ground": false
+    },
+    {
+        "icao24": "4d20b6",
+        "callsign": "VCJ1MA",
+        "origin_country": "Malta",
+        "current_country": "Италия",
+        "velocity": 184.19,
+        "baro_altitude": 12199.62,
+        "longitude": 7.4006,
+        "latitude": 45.7745,
+        "on_ground": false
+    },
+    {
+        "icao24": "4ca302",
+        "callsign": "RYR1WF",
+        "origin_country": "Ireland",
+        "current_country": "Италия",
+        "velocity": 230.09,
+        "baro_altitude": 12192,
+        "longitude": 16.1703,
+        "latitude": 44.5167,
+        "on_ground": false
+    },
+    {
+        "icao24": "49d353",
+        "callsign": "TVS48J",
+        "origin_country": "Czech Republic",
+        "current_country": "Италия",
+        "velocity": 233.4,
+        "baro_altitude": 12192,
+        "longitude": 12.2437,
+        "latitude": 46.5093,
+        "on_ground": false
+    },
+    {
+        "icao24": "3e37d4",
+        "callsign": "DIMIM",
+        "origin_country": "Germany",
+        "current_country": "Италия",
+        "velocity": 208.02,
+        "baro_altitude": 12192,
+        "longitude": 13.8918,
+        "latitude": 46.1787,
+        "on_ground": false
+    },
+    {
+        "icao24": "39bb24",
+        "callsign": "AFR1185",
+        "origin_country": "France",
+        "current_country": "Италия",
+        "velocity": 228.62,
+        "baro_altitude": 12192,
+        "longitude": 9.3512,
+        "latitude": 42.3226,
+        "on_ground": false
+    },
+    {
+        "icao24": "39d314",
+        "callsign": "TVF8603",
+        "origin_country": "France",
+        "current_country": "Италия",
+        "velocity": 218.36,
+        "baro_altitude": 12192,
+        "longitude": 9.1218,
+        "latitude": 42.9345,
+        "on_ground": false
+    },
+    {
+        "icao24": "3964ef",
+        "callsign": "TVF8231",
+        "origin_country": "France",
+        "current_country": "Италия",
+        "velocity": 223.22,
+        "baro_altitude": 12192,
+        "longitude": 9.5897,
+        "latitude": 41.4542,
+        "on_ground": false
+    },
+    {
+        "icao24": "40745e",
+        "callsign": "TOM4PM",
+        "origin_country": "United Kingdom",
+        "current_country": "Италия",
+        "velocity": 250.31,
+        "baro_altitude": 12184.38,
+        "longitude": 18.5944,
+        "latitude": 45.9085,
+        "on_ground": false
+    },
+    {
+        "icao24": "406ac3",
+        "callsign": "EXS18SJ",
+        "origin_country": "United Kingdom",
+        "current_country": "Италия",
+        "velocity": 237.34,
+        "baro_altitude": 11894.82,
+        "longitude": 18.5354,
+        "latitude": 43.6455,
+        "on_ground": false
+    }
+]
