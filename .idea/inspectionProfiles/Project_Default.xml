@@ -1,0 +1,48 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="ast_serialize" />
+          <option value="black" />
+          <option value="certifi" />
+          <option value="charset-normalizer" />
+          <option value="click" />
+          <option value="colorama" />
+          <option value="coverage" />
+          <option value="flake8" />
+          <option value="idna" />
+          <option value="iniconfig" />
+          <option value="isort" />
+          <option value="librt" />
+          <option value="mccabe" />
+          <option value="mypy" />
+          <option value="mypy_extensions" />
+          <option value="packaging" />
+          <option value="pathspec" />
+          <option value="platformdirs" />
+          <option value="pluggy" />
+          <option value="pycodestyle" />
+          <option value="pyflakes" />
+          <option value="Pygments" />
+          <option value="pytest" />
+          <option value="pytest-cov" />
+          <option value="python-dotenv" />
+          <option value="pytokens" />
+          <option value="requests" />
+          <option value="types-requests" />
+          <option value="typing_extensions" />
+          <option value="urllib3" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="data.reception_json" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
