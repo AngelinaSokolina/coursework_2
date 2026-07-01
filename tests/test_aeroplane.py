@@ -1,4 +1,5 @@
 import pytest
+
 from src.aeroplane import Aeroplane
 
 
@@ -68,7 +69,12 @@ class TestAeroplane:
 
     def test_from_dict(self) -> None:
         """Проверяет создание объекта из словаря."""
-        data = {"callsign": "SWR123", "origin_country": "Switzerland", "velocity": 280.5, "baro_altitude": 11000.0}
+        data = {
+            "callsign": "SWR123",
+            "origin_country": "Switzerland",
+            "velocity": 280.5,
+            "baro_altitude": 11000.0,
+        }
         plane = Aeroplane.from_dict(data)
         assert plane.callsign == "SWR123"
         assert plane.velocity == 280.5
@@ -125,7 +131,7 @@ class TestAeroplane:
             latitude=20.5,
             icao24="abc123",
             on_ground=False,
-            current_country="France"
+            current_country="France",
         )
         data = plane.to_dict()
 
@@ -146,7 +152,7 @@ class TestAeroplane:
             "origin_country": "Switzerland",
             "velocity": 280.5,
             "baro_altitude": 11000.0,
-            "current_country": "Germany"
+            "current_country": "Germany",
         }
         plane = Aeroplane.from_dict(data)
         assert plane.current_country == "Germany"
@@ -154,18 +160,8 @@ class TestAeroplane:
     def test_cast_to_object_list(self) -> None:
         """Проверяет преобразование списка словарей в объекты."""
         data_list = [
-            {
-                "callsign": "TEST1",
-                "origin_country": "US",
-                "velocity": 100,
-                "baro_altitude": 5000
-            },
-            {
-                "callsign": "TEST2",
-                "origin_country": "FR",
-                "velocity": 200,
-                "baro_altitude": 10000
-            }
+            {"callsign": "TEST1", "origin_country": "US", "velocity": 100, "baro_altitude": 5000},
+            {"callsign": "TEST2", "origin_country": "FR", "velocity": 200, "baro_altitude": 10000},
         ]
         planes = Aeroplane.cast_to_object_list(data_list, "France")
 

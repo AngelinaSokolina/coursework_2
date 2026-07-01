@@ -11,7 +11,7 @@ class ABCStorage(ABC):
     """
 
     @abstractmethod
-    def add_aeroplane(self, aeroplane: Any) -> None:        # pragma: no cover
+    def add_aeroplane(self, aeroplane: Any) -> None:  # pragma: no cover
         """
         Добавляет информацию о самолете в хранилище.
 
@@ -21,7 +21,7 @@ class ABCStorage(ABC):
         pass
 
     @abstractmethod
-    def get_aeroplanes(self, **criteria: Any) -> list[Any]:     # pragma: no cover
+    def get_aeroplanes(self, **criteria: Any) -> list[Any]:  # pragma: no cover
         """
         Получает данные о самолетах по указанным критериям.
 
@@ -34,7 +34,7 @@ class ABCStorage(ABC):
         pass
 
     @abstractmethod
-    def delete_aeroplane(self, aeroplane: Any) -> None:     # pragma: no cover
+    def delete_aeroplane(self, aeroplane: Any) -> None:  # pragma: no cover
         """
         Удаляет информацию о самолете из хранилища.
 
@@ -44,7 +44,7 @@ class ABCStorage(ABC):
         pass
 
     @abstractmethod
-    def delete_by_criteria(self, **criteria: Any) -> None:      # pragma: no cover
+    def delete_by_criteria(self, **criteria: Any) -> None:  # pragma: no cover
         """
         Удаляет информацию о самолетах по указанным критериям.
 
@@ -54,12 +54,12 @@ class ABCStorage(ABC):
         pass
 
     @abstractmethod
-    def clear(self) -> None:        # pragma: no cover
+    def clear(self) -> None:  # pragma: no cover
         """Полностью очищает хранилище."""
         pass
 
     @abstractmethod
-    def get_all(self) -> list[Any]:     # pragma: no cover
+    def get_all(self) -> list[Any]:  # pragma: no cover
         """
         Получает все данные из хранилища.
 
@@ -69,7 +69,7 @@ class ABCStorage(ABC):
         pass
 
     @abstractmethod
-    def count(self) -> int:     # pragma: no cover
+    def count(self) -> int:  # pragma: no cover
         """
         Возвращает количество записей в хранилище.
 

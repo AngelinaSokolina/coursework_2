@@ -7,16 +7,16 @@ class Aeroplane:
     """
 
     def __init__(
-            self,
-            callsign: str,
-            origin_country: str,
-            velocity: float | None,
-            baro_altitude: float | None,
-            longitude: float | None = None,
-            latitude: float | None = None,
-            icao24: str = "Неизвестно",
-            on_ground: bool = False,
-            current_country: str = "Неизвестно",  # ← НОВЫЙ АТРИБУТ
+        self,
+        callsign: str,
+        origin_country: str,
+        velocity: float | None,
+        baro_altitude: float | None,
+        longitude: float | None = None,
+        latitude: float | None = None,
+        icao24: str = "Неизвестно",
+        on_ground: bool = False,
+        current_country: str = "Неизвестно",  # ← НОВЫЙ АТРИБУТ
     ) -> None:
         self.icao24 = icao24
         self._callsign = callsign
@@ -186,7 +186,9 @@ class Aeroplane:
         )
 
     @classmethod
-    def cast_to_object_list(cls, data_list: list[dict[str, Any]], country: str = "Неизвестно") -> list["Aeroplane"]:
+    def cast_to_object_list(
+        cls, data_list: list[dict[str, Any]], country: str = "Неизвестно"
+    ) -> list["Aeroplane"]:
         """
         Преобразует список словарей в список объектов Aeroplane.
 

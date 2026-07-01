@@ -21,7 +21,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=268.79,
                 baro_altitude=10203.18,
-                icao24="abc123"
+                icao24="abc123",
             )
 
             storage.add_aeroplane(plane)
@@ -43,7 +43,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=268.79,
                 baro_altitude=10203.18,
-                icao24="abc123"
+                icao24="abc123",
             )
 
             plane2 = Aeroplane(
@@ -51,7 +51,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=300.0,
                 baro_altitude=11000.0,
-                icao24="abc123"
+                icao24="abc123",
             )
 
             storage.add_aeroplane(plane1)
@@ -73,7 +73,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=268.79,
                 baro_altitude=10203.18,
-                icao24="abc123"
+                icao24="abc123",
             )
 
             plane2 = Aeroplane(
@@ -81,7 +81,7 @@ class TestJSONStorage:
                 origin_country="France",
                 velocity=250.0,
                 baro_altitude=9500.0,
-                icao24="def456"
+                icao24="def456",
             )
 
             storage.add_aeroplane(plane1)
@@ -103,7 +103,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=268.79,
                 baro_altitude=10203.18,
-                icao24="abc123"
+                icao24="abc123",
             )
 
             storage.add_aeroplane(plane)
@@ -124,7 +124,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=268.79,
                 baro_altitude=10203.18,
-                icao24="abc123"
+                icao24="abc123",
             )
 
             plane2 = Aeroplane(
@@ -132,7 +132,7 @@ class TestJSONStorage:
                 origin_country="France",
                 velocity=250.0,
                 baro_altitude=9500.0,
-                icao24="def456"
+                icao24="def456",
             )
 
             storage.add_aeroplane(plane1)
@@ -156,7 +156,7 @@ class TestJSONStorage:
                 origin_country="United States",
                 velocity=268.79,
                 baro_altitude=10203.18,
-                icao24="abc123"
+                icao24="abc123",
             )
             storage.add_aeroplane(plane)
             assert storage.count() == 1

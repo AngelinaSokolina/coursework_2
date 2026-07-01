@@ -1,5 +1,6 @@
+from typing import Any, Dict, Union, Iterable
+
 import requests
-from typing import Any
 
 from src.abc_api import ABCAPI
 
@@ -40,7 +41,7 @@ class APIAdapter(ABCAPI):
             "User-Agent": self.user_agent,
         }
 
-        params = {
+        params: Dict[str, Union[str, int, float]] = {
             "q": country_name,
             "format": "json",
             "limit": 1,
@@ -118,11 +119,7 @@ class APIAdapter(ABCAPI):
         }
 
         try:
-            response = requests.get(
-                self.opensky_url,
-                params=params,
-                timeout=self.timeout
-            )
+            response = requests.get(self.opensky_url, params=params, timeout=self.timeout)
             response.raise_for_status()
 
             data = response.json()

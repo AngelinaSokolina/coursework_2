@@ -1,10 +1,10 @@
-import pytest
 from unittest.mock import Mock, patch
 
-from src.api import APIAdapter
+import pytest
+
 from src.abc_api import ABCAPI
 from src.abc_storage import ABCStorage
-
+from src.api import APIAdapter
 
 # ====================== ТЕСТЫ ДЛЯ АБСТРАКТНОГО КЛАССА ABCAPI =================================
 # Эти тесты проверяют, что ABCAPI правильно объявлен как абстрактный класс
@@ -15,6 +15,7 @@ class TestABCAPI:
     def test_abc_api_is_abstract(self) -> None:
         """Проверяет, что ABCAPI является абстрактным классом"""
         import abc
+
         assert ABCAPI is not None
         assert isinstance(ABCAPI, abc.ABCMeta)
 
@@ -43,6 +44,7 @@ class TestABCStorage:
     def test_abc_storage_is_abstract(self) -> None:
         """Проверяет, что ABCStorage является абстрактным классом."""
         import abc
+
         assert ABCStorage is not None
         assert isinstance(ABCStorage, abc.ABCMeta)
 
@@ -148,7 +150,25 @@ class TestAPIAdapter:
         mock_response_planes = Mock()
         mock_response_planes.json.return_value = {
             "states": [
-                ["abc123", "TEST123", "United States", None, None, 10.0, 20.0, 10000.0, False, 250.0, None, None, None, None, None, None, None]
+                [
+                    "abc123",
+                    "TEST123",
+                    "United States",
+                    None,
+                    None,
+                    10.0,
+                    20.0,
+                    10000.0,
+                    False,
+                    250.0,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                ]
             ]
         }
         mock_response_planes.raise_for_status.return_value = None
@@ -170,7 +190,25 @@ class TestAPIAdapter:
         mock_response = Mock()
         mock_response.json.return_value = {
             "states": [
-                ["abc123", "TEST456", "France", None, None, 5.0, 45.0, 11000.0, False, 300.0, None, None, None, None, None, None, None]
+                [
+                    "abc123",
+                    "TEST456",
+                    "France",
+                    None,
+                    None,
+                    5.0,
+                    45.0,
+                    11000.0,
+                    False,
+                    300.0,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                ]
             ]
         }
         mock_response.raise_for_status.return_value = None
@@ -209,12 +247,20 @@ class TestAPIAdapter:
                 "abc123",  # 0: icao24
                 "TEST123",  # 1: callsign
                 "United States",  # 2: origin_country
-                None, None,  # 3-4: время
-                10.0, 20.0,  # 5-6: longitude, latitude
+                None,
+                None,  # 3-4: время
+                10.0,
+                20.0,  # 5-6: longitude, latitude
                 10000.0,  # 7: baro_altitude
                 False,  # 8: on_ground
                 250.0,  # 9: velocity
-                None, None, None, None, None, None, None  # 10-16: остальные поля
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,  # 10-16: остальные поля
             ]
         ]
 
@@ -247,6 +293,7 @@ class TestAPIAdapter:
     def test_connection_error_handling(self, mock_get: Mock) -> None:
         """Проверяет обработку ошибок подключения к API."""
         import requests
+
         api = APIAdapter()
 
         # Мокаем ошибку подключения
