@@ -9,7 +9,7 @@ class ABCAPI(ABC):
     """
 
     @abstractmethod
-    def get_country_coordinates(self, country_name: str) -> list[float]:
+    def get_country_coordinates(self, country_name: str) -> list[float]:        # pragma: no cover
         """
         Получает географические координаты страны.
 
@@ -26,7 +26,7 @@ class ABCAPI(ABC):
         pass
 
     @abstractmethod
-    def get_aeroplanes(self, country_name: str) -> list[dict[str, Any]]:
+    def get_aeroplanes(self, country_name: str) -> list[dict[str, Any]]:        # pragma: no cover
         """
         Получает информацию о самолетах в воздушном пространстве страны.
 
@@ -43,7 +43,7 @@ class ABCAPI(ABC):
         pass
 
     @abstractmethod
-    def get_aeroplanes_by_bounding_box(self, bbox: list[float]) -> list[dict[str, Any]]:
+    def get_aeroplanes_by_bounding_box(self, bbox: list[float]) -> list[dict[str, Any]]:    # pragma: no cover
         """
         Получает информацию о самолетах по заданному bounding box.
 
