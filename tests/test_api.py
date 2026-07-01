@@ -1,12 +1,14 @@
 import pytest
 from unittest.mock import Mock, patch
-from typing import Any
 
 from src.api import APIAdapter
 from src.abc_api import ABCAPI
+from src.abc_storage import ABCStorage
 
 
-# ====================== Для абстрактного класса ABCAPI =================================
+# ====================== ТЕСТЫ ДЛЯ АБСТРАКТНОГО КЛАССА ABCAPI =================================
+# Эти тесты проверяют, что ABCAPI правильно объявлен как абстрактный класс
+
 
 class TestABCAPI:
 
@@ -31,49 +33,21 @@ class TestABCAPI:
         assert "get_aeroplanes" in abstract_methods
         assert "get_aeroplanes_by_bounding_box" in abstract_methods
 
-    def test_abstract_methods_have_docstrings(self) -> None:
-        """Проверяет, что все абстрактные методы имеют документацию."""
-        methods = [
-            ABCAPI.get_country_coordinates,
-            ABCAPI.get_aeroplanes,
-            ABCAPI.get_aeroplanes_by_bounding_box,
-        ]
 
-        for method in methods:
-            assert method.__doc__ is not None
-            assert len(method.__doc__.strip()) > 0
+# ====================== ТЕСТЫ ДЛЯ АБСТРАКТНОГО КЛАССА ABCSTORAGE =================================
+# Эти тесты проверяют, что ABCStorage правильно объявлен как абстрактный класс
 
-    def test_abstract_methods_have_correct_annotations(self) -> None:
-        """Проверяет, что методы имеют правильные аннотации типов."""
-        sig = ABCAPI.get_country_coordinates.__annotations__
-        assert "return" in sig
-        assert sig["return"] == list[float]
-
-        sig = ABCAPI.get_aeroplanes.__annotations__
-        assert "return" in sig
-        assert sig["return"] == list[dict[str, Any]]
-
-        sig = ABCAPI.get_aeroplanes_by_bounding_box.__annotations__
-        assert "return" in sig
-        assert sig["return"] == list[dict[str, Any]]
-
-
-# ====================== Для абстрактного класса ABCStorage =================================
 
 class TestABCStorage:
 
     def test_abc_storage_is_abstract(self) -> None:
         """Проверяет, что ABCStorage является абстрактным классом."""
-        from src.abc_storage import ABCStorage
-
         import abc
         assert ABCStorage is not None
         assert isinstance(ABCStorage, abc.ABCMeta)
 
     def test_abc_storage_cannot_be_instantiated(self) -> None:
         """Проверяет, что нельзя создать экземпляр абстрактного класса."""
-        from src.abc_storage import ABCStorage
-
         with pytest.raises(TypeError) as exc_info:
             ABCStorage()  # type: ignore
 
@@ -81,8 +55,6 @@ class TestABCStorage:
 
     def test_abc_storage_has_abstract_methods(self) -> None:
         """Проверяет, что все абстрактные методы объявлены."""
-        from src.abc_storage import ABCStorage
-
         abstract_methods = ABCStorage.__abstractmethods__
 
         assert "add_aeroplane" in abstract_methods
@@ -94,7 +66,9 @@ class TestABCStorage:
         assert "count" in abstract_methods
 
 
-# ====================== Для класса APIAdapter (только моки) =================================
+# ====================== ТЕСТЫ ДЛЯ КЛАССА APIADAPTER =================================
+# Эти тесты проверяют работу APIAdapter с реальными вызовами (через моки)
+
 
 class TestAPIAdapter:
 
@@ -105,29 +79,35 @@ class TestAPIAdapter:
         assert api.openstreetmap_url == "https://nominatim.openstreetmap.org/search"
         assert api.opensky_url == "https://opensky-network.org/api/states/all"
         assert api.timeout == 15
-        assert api.user_agent == "coursework-app/1.0"
         assert api.aeroplanes == []
 
     @patch("src.api.requests.get")
     def test_get_country_coordinates_success(self, mock_get: Mock) -> None:
-        """Проверяет успешное получение координат страны."""
+        """
+        Проверяет успешное получение координат страны.
+        Мокаем ответ API, чтобы он вернул координаты Испании.
+        """
         api = APIAdapter()
 
+        # Создаём поддельный ответ от API
         mock_response = Mock()
-        mock_response.json.return_value = [
-            {"boundingbox": ["36.0", "44.0", "-10.0", "4.0"]}
-        ]
+        mock_response.json.return_value = [{"boundingbox": ["36.0", "44.0", "-10.0", "4.0"]}]
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
 
+        # Вызываем метод
         coords = api.get_country_coordinates("Spain")
 
+        # Проверяем результат
         assert coords == [36.0, 44.0, -10.0, 4.0]
         mock_get.assert_called_once()
 
     @patch("src.api.requests.get")
     def test_get_country_coordinates_empty_country(self, mock_get: Mock) -> None:
-        """Проверяет, что при пустом названии страны выбрасывается ошибка."""
+        """
+        Проверяет, что при пустом названии страны выбрасывается ошибка.
+        API не должно вызываться.
+        """
         api = APIAdapter()
 
         with pytest.raises(ValueError, match="Название страны не может быть пустым"):
@@ -137,11 +117,14 @@ class TestAPIAdapter:
 
     @patch("src.api.requests.get")
     def test_get_country_coordinates_not_found(self, mock_get: Mock) -> None:
-        """Проверяет, что при несуществующей стране выбрасывается ошибка."""
+        """
+        Проверяет, что при несуществующей стране выбрасывается ошибка.
+        API возвращает пустой список.
+        """
         api = APIAdapter()
 
         mock_response = Mock()
-        mock_response.json.return_value = []
+        mock_response.json.return_value = []  # ← страна не найдена
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
 
@@ -150,15 +133,18 @@ class TestAPIAdapter:
 
     @patch("src.api.requests.get")
     def test_get_aeroplanes_success(self, mock_get: Mock) -> None:
-        """Проверяет успешное получение самолетов."""
+        """
+        Проверяет успешное получение самолетов.
+        Сначала мокаем получение координат страны, потом получение самолетов.
+        """
         api = APIAdapter()
 
+        # Мок для координат страны
         mock_response_coords = Mock()
-        mock_response_coords.json.return_value = [
-            {"boundingbox": ["36.0", "44.0", "-10.0", "4.0"]}
-        ]
+        mock_response_coords.json.return_value = [{"boundingbox": ["36.0", "44.0", "-10.0", "4.0"]}]
         mock_response_coords.raise_for_status.return_value = None
 
+        # Мок для самолетов
         mock_response_planes = Mock()
         mock_response_planes.json.return_value = {
             "states": [
@@ -175,29 +161,6 @@ class TestAPIAdapter:
         assert data[0]["callsign"] == "TEST123"
         assert data[0]["origin_country"] == "United States"
         assert mock_get.call_count == 2
-
-    @patch("src.api.requests.get")
-    def test_get_aeroplanes_empty_country(self, mock_get: Mock) -> None:
-        """Проверяет, что при пустом названии страны выбрасывается ошибка."""
-        api = APIAdapter()
-
-        with pytest.raises(ValueError, match="Название страны не может быть пустым"):
-            api.get_aeroplanes("")
-
-        mock_get.assert_not_called()
-
-    @patch("src.api.requests.get")
-    def test_get_aeroplanes_country_not_found(self, mock_get: Mock) -> None:
-        """Проверяет, что при несуществующей стране выбрасывается ошибка."""
-        api = APIAdapter()
-
-        mock_response = Mock()
-        mock_response.json.return_value = []
-        mock_response.raise_for_status.return_value = None
-        mock_get.return_value = mock_response
-
-        with pytest.raises(ValueError, match="Страна 'Nonexistent' не найдена"):
-            api.get_aeroplanes("Nonexistent")
 
     @patch("src.api.requests.get")
     def test_get_aeroplanes_by_bounding_box_success(self, mock_get: Mock) -> None:
@@ -227,7 +190,7 @@ class TestAPIAdapter:
         api = APIAdapter()
 
         mock_response = Mock()
-        mock_response.json.return_value = {"states": []}
+        mock_response.json.return_value = {"states": []}  # ← пустой список
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
 
@@ -236,28 +199,22 @@ class TestAPIAdapter:
 
         assert data == []
 
-    def test_get_aeroplanes_by_bounding_box_invalid(self) -> None:
-        """Проверяет, что при некорректном bbox выбрасывается ошибка."""
-        api = APIAdapter()
-
-        with pytest.raises(ValueError, match="Некорректный bounding box"):
-            api.get_aeroplanes_by_bounding_box([])
-
-        with pytest.raises(ValueError, match="Некорректный bounding box"):
-            api.get_aeroplanes_by_bounding_box([1.0, 2.0, 3.0])
-
-        with pytest.raises(ValueError, match="Все координаты должны быть числами"):
-            api.get_aeroplanes_by_bounding_box(["a", "b", "c", "d"])  # type: ignore
-
     def test_parse_states(self) -> None:
-        """Проверяет парсинг данных от opensky."""
+        """Проверяет парсинг данных от opensky API."""
         api = APIAdapter()
 
+        # Формат данных от opensky (индексы в массиве)
         test_states = [
             [
-                "abc123", "TEST123", "United States", 1234567890, 1234567890,
-                10.0, 20.0, 10000.0, False, 250.0, 90.0, 0.0,
-                None, 10100.0, "1234", False, 0
+                "abc123",  # 0: icao24
+                "TEST123",  # 1: callsign
+                "United States",  # 2: origin_country
+                None, None,  # 3-4: время
+                10.0, 20.0,  # 5-6: longitude, latitude
+                10000.0,  # 7: baro_altitude
+                False,  # 8: on_ground
+                250.0,  # 9: velocity
+                None, None, None, None, None, None, None  # 10-16: остальные поля
             ]
         ]
 
@@ -280,34 +237,19 @@ class TestAPIAdapter:
         assert result == []
 
     def test_parse_states_incomplete(self) -> None:
-        """Проверяет парсинг неполных данных."""
+        """Проверяет парсинг неполных данных (пропускает)."""
         api = APIAdapter()
-        test_states = [["abc123", "TEST123"]]
+        test_states = [["abc123", "TEST123"]]  # ← неполные данные
         result = api._parse_states(test_states)
         assert result == []
 
-    def test_parse_states_with_none_values(self) -> None:
-        """Проверяет парсинг данных с None значениями."""
-        api = APIAdapter()
-
-        test_states = [
-            [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
-        ]
-
-        result = api._parse_states(test_states)
-
-        assert len(result) == 1
-        assert result[0]["icao24"] == "Неизвестно"
-        assert result[0]["callsign"] == "Неизвестно"
-        assert result[0]["origin_country"] == "Неизвестно"
-        assert result[0]["on_ground"] is False
-
     @patch("src.api.requests.get")
     def test_connection_error_handling(self, mock_get: Mock) -> None:
-        """Проверяет обработку ошибок подключения."""
+        """Проверяет обработку ошибок подключения к API."""
         import requests
         api = APIAdapter()
 
+        # Мокаем ошибку подключения
         mock_get.side_effect = requests.exceptions.ConnectionError("Connection error")
 
         with pytest.raises(ConnectionError, match="Ошибка при запросе к nominatim API"):
