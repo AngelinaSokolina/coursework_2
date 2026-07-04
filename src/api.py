@@ -38,7 +38,7 @@ class APIAdapter(ABCAPI):
             raise ValueError("Название страны не может быть пустым")
 
         headers = {
-            "User-Agent": self.user_agent,
+            "User-Agent": self._user_agent,
         }
 
         params: Dict[str, Union[str, int, float]] = {
@@ -49,10 +49,10 @@ class APIAdapter(ABCAPI):
 
         try:
             response = requests.get(
-                self.openstreetmap_url,
+                self._openstreetmap_url,
                 params=params,
                 headers=headers,
-                timeout=self.timeout
+                timeout=self._timeout
             )
             response.raise_for_status()
 
@@ -119,7 +119,7 @@ class APIAdapter(ABCAPI):
         }
 
         try:
-            response = requests.get(self.opensky_url, params=params, timeout=self.timeout)
+            response = requests.get(self._opensky_url, params=params, timeout=self._timeout)
             response.raise_for_status()
 
             data = response.json()
@@ -128,8 +128,8 @@ class APIAdapter(ABCAPI):
             if not states:
                 return []
 
-            self.aeroplanes = self._parse_states(states)
-            return self.aeroplanes
+            self._aeroplanes = self._parse_states(states)
+            return self._aeroplanes
 
         except requests.exceptions.Timeout:
             raise ConnectionError("Превышено время ожидания при запросе к opensky API")

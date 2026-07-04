@@ -78,10 +78,10 @@ class TestAPIAdapter:
         """Проверяет инициализацию APIAdapter."""
         api = APIAdapter()
 
-        assert api.openstreetmap_url == "https://nominatim.openstreetmap.org/search"
-        assert api.opensky_url == "https://opensky-network.org/api/states/all"
-        assert api.timeout == 15
-        assert api.aeroplanes == []
+        assert api._openstreetmap_url == "https://nominatim.openstreetmap.org/search"
+        assert api._opensky_url == "https://opensky-network.org/api/states/all"
+        assert api._timeout == 15
+        assert api._aeroplanes == []
 
     @patch("src.api.requests.get")
     def test_get_country_coordinates_success(self, mock_get: Mock) -> None:

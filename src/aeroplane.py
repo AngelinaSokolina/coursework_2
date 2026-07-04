@@ -6,6 +6,18 @@ class Aeroplane:
     Класс для работы с информацией о самолетах.
     """
 
+    __slots__ = (
+        "icao24",
+        "_callsign",
+        "_origin_country",
+        "_velocity",
+        "_baro_altitude",
+        "_longitude",
+        "_latitude",
+        "_on_ground",
+        "_current_country",
+    )
+
     def __init__(
         self,
         callsign: str,

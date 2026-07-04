@@ -1,1 +1,46 @@
-[]
+[
+    {
+        "icao24": "ac06e3",
+        "callsign": "HBAL820",
+        "origin_country": "United States",
+        "current_country": "Россия",
+        "velocity": 2.06,
+        "baro_altitude": 18958.56,
+        "longitude": -64.6857,
+        "latitude": 45.9459,
+        "on_ground": false
+    },
+    {
+        "icao24": "a4799b",
+        "callsign": "VJA388",
+        "origin_country": "United States",
+        "current_country": "Россия",
+        "velocity": 222.48,
+        "baro_altitude": 14325.6,
+        "longitude": -65.1175,
+        "latitude": 41.3986,
+        "on_ground": false
+    },
+    {
+        "icao24": "a79535",
+        "callsign": "N588SE",
+        "origin_country": "United States",
+        "current_country": "Россия",
+        "velocity": 272.82,
+        "baro_altitude": 14325.6,
+        "longitude": -98.9744,
+        "latitude": 50.6648,
+        "on_ground": false
+    },
+    {
+        "icao24": "a0e1e8",
+        "callsign": "EJA156",
+        "origin_country": "United States",
+        "current_country": "Россия",
+        "velocity": 240.31,
+        "baro_altitude": 13716,
+        "longitude": -123.1331,
+        "latitude": 44.4357,
+        "on_ground": false
+    }
+]
