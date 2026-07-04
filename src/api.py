@@ -14,11 +14,11 @@ class APIAdapter(ABCAPI):
 
     def __init__(self) -> None:
         """Инициализация с базовыми URL для API"""
-        self.openstreetmap_url = "https://nominatim.openstreetmap.org/search"
-        self.opensky_url = "https://opensky-network.org/api/states/all"
-        self.timeout = 15
-        self.user_agent = "coursework-app/1.0"
-        self.aeroplanes: list[dict[str, Any]] = []
+        self._openstreetmap_url = "https://nominatim.openstreetmap.org/search"
+        self._opensky_url = "https://opensky-network.org/api/states/all"
+        self._timeout = 15
+        self._user_agent = "coursework-app/1.0"
+        self._aeroplanes: list[dict[str, Any]] = []
 
     def get_country_coordinates(self, country_name: str) -> list[float]:
         """
