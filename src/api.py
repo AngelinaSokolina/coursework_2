@@ -1,4 +1,4 @@
-from typing import Any, Dict, Union, Iterable
+from typing import Any, Dict, Union
 
 import requests
 
@@ -14,11 +14,11 @@ class APIAdapter(ABCAPI):
 
     def __init__(self) -> None:
         """Инициализация с базовыми URL для API"""
-        self.openstreetmap_url = "https://nominatim.openstreetmap.org/search"
-        self.opensky_url = "https://opensky-network.org/api/states/all"
-        self.timeout = 15
-        self.user_agent = "coursework-app/1.0"
-        self.aeroplanes: list[dict[str, Any]] = []
+        self._openstreetmap_url = "https://nominatim.openstreetmap.org/search"
+        self._opensky_url = "https://opensky-network.org/api/states/all"
+        self._timeout = 15
+        self._user_agent = "coursework-app/1.0"
+        self._aeroplanes: list[dict[str, Any]] = []
 
     def get_country_coordinates(self, country_name: str) -> list[float]:
         """
@@ -38,7 +38,7 @@ class APIAdapter(ABCAPI):
             raise ValueError("Название страны не может быть пустым")
 
         headers = {
-            "User-Agent": self.user_agent,
+            "User-Agent": self._user_agent,
         }
 
         params: Dict[str, Union[str, int, float]] = {
@@ -49,10 +49,7 @@ class APIAdapter(ABCAPI):
 
         try:
             response = requests.get(
-                self.openstreetmap_url,
-                params=params,
-                headers=headers,
-                timeout=self.timeout
+                self._openstreetmap_url, params=params, headers=headers, timeout=self._timeout
             )
             response.raise_for_status()
 
@@ -119,7 +116,7 @@ class APIAdapter(ABCAPI):
         }
 
         try:
-            response = requests.get(self.opensky_url, params=params, timeout=self.timeout)
+            response = requests.get(self._opensky_url, params=params, timeout=self._timeout)
             response.raise_for_status()
 
             data = response.json()
@@ -128,8 +125,8 @@ class APIAdapter(ABCAPI):
             if not states:
                 return []
 
-            self.aeroplanes = self._parse_states(states)
-            return self.aeroplanes
+            self._aeroplanes = self._parse_states(states)
+            return self._aeroplanes
 
         except requests.exceptions.Timeout:
             raise ConnectionError("Превышено время ожидания при запросе к opensky API")
