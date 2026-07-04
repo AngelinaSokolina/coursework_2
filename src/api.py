@@ -1,4 +1,4 @@
-from typing import Any, Dict, Union, Iterable
+from typing import Any, Dict, Union
 
 import requests
 
@@ -49,10 +49,7 @@ class APIAdapter(ABCAPI):
 
         try:
             response = requests.get(
-                self._openstreetmap_url,
-                params=params,
-                headers=headers,
-                timeout=self._timeout
+                self._openstreetmap_url, params=params, headers=headers, timeout=self._timeout
             )
             response.raise_for_status()
 
